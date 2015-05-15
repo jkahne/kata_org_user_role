@@ -15,8 +15,7 @@ describe "#parent" do
   end
 
   it 'cannot have orgs below third level' do
-    assert Org.new("grandchild org 1", co1)
-
+    assert_raises (OrgHierarchyTooDeepError) { Org.new("grandchild org 1", co1 ) }
   end
 
 end
