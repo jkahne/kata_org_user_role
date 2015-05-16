@@ -9,7 +9,7 @@ class Org
 
   def initialize(name, parent = Org.root, policy = OrgDepthPolicy)
     @parent = parent
-    policy.check_depth? self
+    policy.check_depth! self
     @name = name
     @permission = Permission.new(self)
   end
@@ -32,7 +32,7 @@ end
 
 
 class OrgDepthPolicy
-  def self.check_depth? org
+  def self.check_depth! org
     return if org.parent == NullOrg
     return if org.parent == Org.root
     return if org.parent.parent == Org.root
