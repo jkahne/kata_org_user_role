@@ -25,6 +25,19 @@ class Org
     @permissions[user] = :denied
   end
 
+  def visible_to? user
+    return true if granted? user
+    false
+  end
+
+  def granted? user
+    if @permissions.key? user
+      return [:admin, :user].include?( @permissions[user] )
+    else
+      return parent.granted? user
+    end
+  end
+
   def parent
     @parent
   end
