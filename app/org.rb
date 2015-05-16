@@ -12,16 +12,10 @@ class Org
     @root ||= Org.new("Root Org", NullOrg)
   end
 
-  def add_admin user
-    @permissions[user] = :admin
-  end
-
-  def add_user user
-    @permissions[user] = :user
-  end
-
-  def add_denied user
-    @permissions[user] = :denied
+  [:admin, :user, :denied].each do |meth|
+    define_method("add_#{meth}") do |user| 
+      @permissions[user] = meth
+    end
   end
 
   def visible_to? user
