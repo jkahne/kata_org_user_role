@@ -25,5 +25,22 @@ describe "kata structure" do
     assert_equal :denied, co2.role_for(ally)
   end
 
+  it 'roles filter down to children for all roles' do
+    o1.add_admin ally
+    assert_equal :admin,  o1.role_for(ally)
+    assert_equal :admin,  co1.role_for(ally)
+    assert_equal :admin,  co2.role_for(ally)
+
+    o1.add_user ally
+    assert_equal :user,  o1.role_for(ally)
+    assert_equal :user,  co1.role_for(ally)
+    assert_equal :user,  co2.role_for(ally)
+
+    o1.add_denied ally
+    assert_equal :denied,  o1.role_for(ally)
+    assert_equal :denied,  co1.role_for(ally)
+    assert_equal :denied,  co2.role_for(ally)
+  end
+
 
 end

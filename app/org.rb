@@ -13,6 +13,18 @@ class Org
     @root ||= Org.new("Root Org", NullOrg)
   end
 
+  def add_admin user
+    @permissions[user] = :admin
+  end
+
+  def add_user user
+    @permissions[user] = :user
+  end
+
+  def add_denied user
+    @permissions[user] = :denied
+  end
+
   def parent
     @parent
   end
