@@ -9,10 +9,10 @@ class Permission
   end
 
   def granted? user
-    if @permissions.key? user
-      return [:admin, :user].include?( @permissions[user] )
+    if permission_defined_at_this_level? user
+      return permission_granted? user
     else
-      return @org.granted? user
+      return permission_defined_at_parent? user
     end
   end
 
@@ -21,9 +21,24 @@ class Permission
     false
   end
 
-  [:admin, :user, :denied].each do |meth|
-    define_method("add_#{meth}") do |user| 
+  Constants.roles.each do |meth|
+    define_method("add_#{meth}") do |user|
       @permissions[user] = meth
     end
   end
+
+  private
+
+  def permission_defined_at_this_level? user
+    @permissions.key? user
+  end
+
+  def permission_defined_at_parent? user
+    @org.granted? user
+  end
+
+  def permission_granted? user
+    Constants.grantable_roles.include?( @permissions[user] )
+  end
+
 end

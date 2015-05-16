@@ -17,13 +17,12 @@ class Org
   def self.root
     @root ||= Org.new("Root Org", NullOrg)
   end
-
 end
 
 
 class NullOrg
   def self.role_for user
-    :denied
+    Constants.default_role
   end
   def self.granted? user
     false
