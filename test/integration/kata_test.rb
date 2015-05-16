@@ -56,4 +56,17 @@ describe "kata structure" do
     refute ally.can_see? co2
   end
 
+  it 'user cannot see any orgs by default' do
+    [root, o1, o2, o3, o4, co1, co2, co3, co4].each do |org|
+      refute ally.can_see? org 
+    end
+  end
+
+  it 'roles are implicitly inherited' do
+    root.add_admin ally
+    [root, o1, o2, o3, o4, co1, co2, co3, co4].each do |org|
+      assert ally.can_see? org 
+    end
+  end
+
 end

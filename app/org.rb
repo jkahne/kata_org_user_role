@@ -63,6 +63,10 @@ class NullOrg
     :denied
   end
 
+  def self.granted? user
+    false
+  end
+
 end
 
 class OrgHierarchyTooDeepError < StandardError
