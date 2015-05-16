@@ -1,13 +1,12 @@
 class Org
   attr_accessor :name
 
-  def initialize(name, parent = Org.root)
-    @name = name
+  def initialize(name, parent = Org.root, policy = OrgDepthPolicy)
     @parent = parent
-    raise OrgHierarchyTooDeepError.new("too deep") if too_deep?
+    policy.check_depth? self
+    @name = name
     @permissions = {}
   end
-
 
   def self.root
     @root ||= Org.new("Root Org", NullOrg)
@@ -67,6 +66,15 @@ class NullOrg
     false
   end
 
+end
+
+class OrgDepthPolicy
+  def self.check_depth? org
+    return if org.parent == NullOrg
+    return if org.parent == Org.root
+    return if org.parent.parent == Org.root
+    raise OrgHierarchyTooDeepError.new("too deep") 
+  end
 end
 
 class OrgHierarchyTooDeepError < StandardError
