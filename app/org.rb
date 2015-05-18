@@ -5,7 +5,7 @@ class Org
 
   extend Forwardable
 
-  def_delegators :permission, :role_for, :visible_to?, :granted?, :add_admin, :add_user, :add_denied
+  def_delegators :permission, :role_for, :granted?, :add_admin, :add_user, :add_denied
 
   def initialize(name, parent = Org.root, policy = OrgDepthPolicy)
     @parent = parent
@@ -26,7 +26,6 @@ class Org
     @parent.granted? user
   end
 end
-
 
 
 class NullOrg

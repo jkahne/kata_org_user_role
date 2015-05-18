@@ -6,6 +6,6 @@ class User
   end
 
   def can_see? org
-    org.visible_to? self
+    org.granted? self
   end
 end

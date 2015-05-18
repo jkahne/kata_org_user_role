@@ -16,11 +16,6 @@ class Permission
     end
   end
 
-  def visible_to? user
-    return true if granted? user
-    false
-  end
-
   Constants.roles.each do |meth|
     define_method("add_#{meth}") do |user|
       @permissions[user] = meth
