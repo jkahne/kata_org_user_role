@@ -17,7 +17,16 @@ class Org
   def self.root
     @root ||= Org.new("Root Org", NullOrg)
   end
+
+  def parent_has_role_for  user
+    @parent.role_for user
+  end
+
+  def parent_granted? user
+    @parent.granted? user
+  end
 end
+
 
 
 class NullOrg

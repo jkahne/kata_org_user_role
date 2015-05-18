@@ -1,11 +1,11 @@
 class Permission
   def initialize(org)
-    @parent = org.parent
+    @org = org
     @permissions = {}
   end
 
   def role_for user
-    @permissions[user] || @parent.role_for(user)  
+    @permissions[user] || @org.parent_has_role_for(user)  
   end
 
   def granted? user
@@ -34,7 +34,7 @@ class Permission
   end
 
   def permission_defined_at_parent? user
-    @parent.granted? user
+    @org.parent_granted? user
   end
 
   def permission_granted? user
